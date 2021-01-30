@@ -10,16 +10,19 @@ def main():
     _,spectrum = get_fourier_spectrum(grayscale_image)
     plot_side_by_side(image,spectrum,'2D-DFT','Original image','DFT spectrum (centered)')
 
-    sine_image = generate_sinusoidal_image(500,500)
+    sine_image = generate_sinusoidal_image(300,300)
     _, spectrum_sin = get_fourier_spectrum(sine_image)
     plot_side_by_side(sine_image, spectrum_sin, '2D-DFT', 'Sinusoidal Image', 'DFT spectrum(centered)')    
 
 def plot_side_by_side(image_1,image_2,main_title,title_1,title_2):
+    # assuming equal size images. 
+    label_limit_x = int(image_1.shape[1]/2)
+    label_limit_y = int(image_1.shape[0]/2)
     fig, plots = plt.subplots(1,2)
     fig.suptitle(main_title)
-    plots[0].imshow(image_1)
+    plots[0].imshow(image_1, extent=[-label_limit_x,label_limit_x,-label_limit_y,label_limit_y])
     plots[0].set_title(title_1)
-    plots[1].imshow(image_2, cmap='gray')
+    plots[1].imshow(image_2, cmap='gray',extent=[-label_limit_x,label_limit_x,-label_limit_y,label_limit_y])
     plots[1].set_title(title_2)
     plt.show()
 
